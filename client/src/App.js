@@ -28,6 +28,9 @@ export default function App() {
   }, []);
 
   const KaydedilenlerListesineEkle = (id) => {
+    console.log("kaydete bastım", id);
+    const newSaved = [...saved, id];
+    setSaved(newSaved);
     // Burası esnek. Aynı filmin birden fazla kez "saved" e eklenmesini engelleyin
   };
 
@@ -40,7 +43,14 @@ export default function App() {
           ]
         }
       />
-      <FilmListesi movies={movieList} />
+      <Switch>
+        <Route path={"/filmler/:id"}>
+          <Film saveCallBack={KaydedilenlerListesineEkle} />
+        </Route>
+        <Route path="/">
+          <FilmListesi movies={movieList} />
+        </Route>
+      </Switch>
     </div>
   );
 }

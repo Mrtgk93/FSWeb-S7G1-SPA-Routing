@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Switch, Route, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 export default function Film(props) {
   const [movie, setMovie] = useState();
@@ -23,10 +23,10 @@ export default function Film(props) {
       });
     // Bu effect her `id ` değiştiğinde çalışmalı
     // Bunu nasıl gerçekleştirebiliriz?
-  }, [useParams()]);
+  }, [id]);
 
   // Yalnızca esnek görevlere geçtiğinizde burdaki yorum etiketini kaldırın
-  // const filmiKaydet = evt => { }
+  const filmiKaydet = (evt) => {};
 
   if (!movie) {
     return <div>Film bilgisi yükleniyor...</div>;
@@ -36,26 +36,26 @@ export default function Film(props) {
 
   return (
     <div className="save-wrapper">
-      <Route path={`/${id}`}>
-        <div className="movie-card">
-          <h2>{title}</h2>
-          <div className="movie-director">
-            Director: <em>{director}</em>
-          </div>
-          <div className="movie-metascore">
-            Metascore: <strong>{metascore}</strong>
-          </div>
-          <h3>Actors</h3>
-
-          {stars.map((star) => (
-            <div key={star} className="movie-star">
-              {star}
-            </div>
-          ))}
+      <div className="movie-card">
+        <h2>{title}</h2>
+        <div className="movie-director">
+          Director: <em>{director}</em>
         </div>
+        <div className="movie-metascore">
+          Metascore: <strong>{metascore}</strong>
+        </div>
+        <h3>Actors</h3>
 
-        <div className="save-button">Kaydet</div>
-      </Route>
+        {stars.map((star) => (
+          <div key={star} className="movie-star">
+            {star}
+          </div>
+        ))}
+      </div>
+
+      <div className="save-button" onClick={() => props.saveCallBack(id)}>
+        Kaydet
+      </div>
     </div>
   );
 }
